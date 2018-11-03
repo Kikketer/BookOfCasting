@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#000000">
+    <title>Secrets...</title>
+    <style>
+      .button-block {
+
+      }
+      
+      button {
+        padding: .5em;
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      textarea {
+        width: 100%;
+        height: 300px;
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>
+      You need to enable JavaScript to run this app.
+    </noscript>
+    <div id="button-block"></div>
+    <textarea name="" id="output" cols="30" rows="10"></textarea>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="phrases.js"></script>
+    <script>
+      console.log('Booting up!')
+      const socket = io()
+
+      socket.on('cast', function(type) {
+        const out = document.querySelector('#output')
+        out.value = out.value + '\n' + `Cast: ${type}`
+      })
+
+      const buttonBlock = document.querySelector('#button-block')
+      // Build the buttons
+      Object.keys(phrases).forEach(type => {
+        const btn = document.createElement('button')
+        btn.setAttribute('data-type', type)
+        btn.addEventListener('click', castSpell)
+        btn.innerHTML = `Cast ${type}`
+        buttonBlock.append(btn)
+      })
+
+      function castSpell(event) {
+        const type = event.target.getAttribute('data-type')
+        var oReq = new XMLHttpRequest();
+        oReq.addEventListener("load", function(event) {
+          console.log(event)
+        });
+        oReq.open("POST", `http://192.168.0.174:3001/cast?spell=${type}`);
+        oReq.send();        
+
+      }
+    </script>
+  </body>
+</html>
