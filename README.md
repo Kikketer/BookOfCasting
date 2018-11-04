@@ -1,4 +1,8 @@
-# Raspberry Potter + Marauders Output
+# Book of Casting
+
+The intention of this repo was originally intended to repeat the IR Raspberry Potter project.  It adapted to a simple client/server with sockets, so you don't really NEED to use a raspberry pi.  Here's an idea, just mount a tablet into a book and serve up the webpage.
+
+The rest of this readme is just notes for myself.
 
 ## Setting up Raspberry PI
 
