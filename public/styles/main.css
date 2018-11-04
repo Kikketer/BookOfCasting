@@ -15,6 +15,7 @@ body {
   height: 100vh;
   width: 100%;
   overflow: hidden;
+  cursor: none;
 }
 
 #fullscreen-block {
@@ -32,8 +33,7 @@ body {
   position: absolute;
   width: 60%;
   font-family: magic, serif;
-  font-size: 5em;
-  position: relative;
+  font-size: 2.5em;
   opacity: 0;
   animation-fill-mode: both;
   transition-property: top left;
@@ -53,10 +53,16 @@ body {
   animation: reveal 25s;
 }
 
+.out {
+  transition-property: opacity;
+  transition-duration: 500ms;
+  opacity: 0;
+}
+
 @keyframes reveal {
   0% {
     opacity: 0;
-    top: 25%;
+    top: 15%;
     left: 15%;
     transform: rotate(0deg) scale(1);
   }
@@ -70,8 +76,8 @@ body {
     opacity: 0;
   }
   100% {
-    top: 45%;
-    left: 35%;
+    top: 25%;
+    left: 25%;
     transform: rotate(10deg) scale(1.3);
   }
 }

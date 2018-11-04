@@ -17,7 +17,6 @@
     <div class="phrase-block"></div>
 
     <script src="/socket.io/socket.io.js"></script>
-    <script src="phrases.js"></script>
     <script>
       const socket = io()
       const phraseElements = []
@@ -31,18 +30,31 @@
         }
       })
 
-      socket.on('cast', function(type) {
-        const foundPhrase = phrases[type][Math.floor(Math.random() * phrases[type].length)]
+      socket.on('cast', function(phrase) {
+        clearScreen()
+
         const phraseBlock = document.querySelector('.phrase-block')
         const phraseElement = document.createElement('div')
-        phraseElement.innerHTML = foundPhrase
+        phraseElement.innerHTML = phrase
         phraseElement.id = `phrase-${Math.floor(Math.random() * 1000)}`
         phraseElement.className = 'phrase in'
-        phraseElements.push({id: phraseElement.id, removeMe: setTimeout(() => {
-          phraseBlock.removeChild(phraseElement)
-        }, 25000)})
+        phraseElements.push({
+          id: phraseElement.id, 
+          clearMe: () => {
+            phraseElement.classList.add('out')
+            phraseElement.classList.remove('in')
+          }, 
+          removeMe: setTimeout(() => {
+            phraseBlock.removeChild(phraseElement)
+          }, 25000)})
         phraseBlock.append(phraseElement)
       })
+
+      function clearScreen() {
+        phraseElements.forEach(ph => {
+          ph.clearMe()
+        })
+      }
     </script>
   </body>
 </html>

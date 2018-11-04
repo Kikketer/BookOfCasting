@@ -7,14 +7,33 @@
     <meta name="theme-color" content="#000000">
     <title>Secrets...</title>
     <style>
-      .button-block {
+      #current-name {
+        margin: 5px;
+        font-weight: bold;
+        font-family: Arial;
+      }
 
+      #button-block {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      #names-block {
+        border-top: 1px solid orange;
+        margin-top: 10px;
+        display: flex;
+        flex-wrap: wrap;
       }
       
       button {
         padding: .5em;
-        display: block;
-        margin-bottom: 4px;
+        flex: 0 0 50px;
+        margin-bottom: 5px;
+        margin-right: 5px;  
+      }
+
+      button.tocast {
+        background: lightgreen;
       }
 
       textarea {
@@ -27,39 +46,72 @@
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
+    <div id="current-name"></div>
     <div id="button-block"></div>
+    <div id="names-block"></div>
     <textarea name="" id="output" cols="30" rows="10"></textarea>
     <script src="/socket.io/socket.io.js"></script>
-    <script src="phrases.js"></script>
     <script>
       console.log('Booting up!')
       const socket = io()
+      let eggIndex = 0
+      let currentName = ''
+      const spellsToCast = ['alohomora', 'wingardium', 'nox', 'lumos', 'stupify', 'expelliarmus']
 
       socket.on('cast', function(type) {
         const out = document.querySelector('#output')
         out.value = out.value + '\n' + `Cast: ${type}`
       })
 
-      const buttonBlock = document.querySelector('#button-block')
-      // Build the buttons
-      Object.keys(phrases).forEach(type => {
-        const btn = document.createElement('button')
-        btn.setAttribute('data-type', type)
-        btn.addEventListener('click', castSpell)
-        btn.innerHTML = `Cast ${type}`
-        buttonBlock.append(btn)
-      })
+      function onConfig({names, phrases}) {
+        const buttonBlock = document.querySelector('#button-block')
+        // Build the buttons
+        phrases.forEach(type => {
+            const btn = document.createElement('button')
+            btn.setAttribute('data-type', type)
+            btn.addEventListener('click', castSpell)
+            btn.innerHTML = type
+            if(spellsToCast.includes(type)) {
+              btn.classList.add('tocast')
+            }
+            buttonBlock.append(btn)
+        })
+
+        const nameBlock = document.querySelector('#names-block')
+        names.forEach((name, index) => {
+          const btn = document.createElement('button')
+          btn.setAttribute('data-name', name)
+          btn.addEventListener('click', setName)
+          btn.innerHTML = name
+          nameBlock.append(btn)
+        })
+        currentName = names[0]
+        document.querySelector('#current-name').innerHTML = names[0]
+      }
 
       function castSpell(event) {
         const type = event.target.getAttribute('data-type')
         var oReq = new XMLHttpRequest();
         oReq.addEventListener("load", function(event) {
-          console.log(event)
+          console.log('Sent')
         });
-        oReq.open("POST", `http://192.168.0.174:3001/cast?spell=${type}`);
+        oReq.open("POST", `http://192.168.0.174:3001/cast?type=${type}&name=${currentName}`);
         oReq.send();        
-
       }
+
+      function setName(event) {
+        currentName = event.target.getAttribute('data-name')
+        document.querySelector('#current-name').innerHTML = currentName
+      }
+
+      const confReq = new XMLHttpRequest()
+      confReq.addEventListener('load', function(event) {
+        console.log(this.responseText)
+        onConfig(JSON.parse(this.responseText))
+      })
+      confReq.open('GET', `http://192.168.0.174:3001/configuration`)
+      confReq.send()
+      
     </script>
   </body>
 </html>
