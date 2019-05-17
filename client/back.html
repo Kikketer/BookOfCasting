@@ -50,7 +50,7 @@
     <div id="button-block"></div>
     <div id="names-block"></div>
     <textarea name="" id="output" cols="30" rows="10"></textarea>
-    <script src="/socket.io/socket.io.js"></script>
+    <script src="./libraries/socket.io.slim.js"></script>
     <script>
       console.log('Booting up!')
       const socket = io()
@@ -95,7 +95,7 @@
         oReq.addEventListener("load", function(event) {
           console.log('Sent')
         });
-        oReq.open("POST", `http://192.168.0.174:3001/cast?type=${type}&name=${currentName}`);
+        oReq.open("POST", `/cast?type=${type}&name=${currentName}`);
         oReq.send();        
       }
 
@@ -109,7 +109,7 @@
         console.log(this.responseText)
         onConfig(JSON.parse(this.responseText))
       })
-      confReq.open('GET', `http://192.168.0.174:3001/configuration`)
+      confReq.open('GET', `/configuration`)
       confReq.send()
       
     </script>

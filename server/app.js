@@ -8,7 +8,7 @@ var phrases = require('./phrases')
 
 let currentEggIndex = 0
 
-app.use(express.static(path.resolve('public')))
+app.use(express.static(path.resolve('dist')))
 
 app.post('/cast', function(req, res) {
   let phrase = ''
