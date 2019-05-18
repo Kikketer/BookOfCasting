@@ -23,6 +23,7 @@
     font-weight: 300;
     font-size: 20px;
     letter-spacing: 1px;
+    opacity: 0.7;
 
     background: #000;
     -webkit-mask: url("../images/nature-sprite-2.png");

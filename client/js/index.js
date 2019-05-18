@@ -45,3 +45,5 @@ function clearScreen() {
     ph.clearMe()
   })
 }
+
+function createVisualAnimation() {}
