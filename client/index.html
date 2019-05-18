@@ -20,48 +20,6 @@
     </div>
 
     <script src="./libraries/socket.io.slim.js"></script>
-    <script>
-      const socket = io()
-      const phraseElements = []
-
-      document.querySelector('#fullscreen-block').addEventListener('click', function(e) {
-        const elem = document.documentElement
-        if (elem.requestFullscreen) {
-          elem.requestFullscreen()
-        } else if (elem.webkitRequestFullscreen) {
-          elem.webkitRequestFullscreen()
-        }
-      })
-
-      socket.on('cast', function(phrase) {
-        clearScreen()
-
-        const blob = document.querySelector('.blur-blob').classList.remove('hide')
-
-        const phraseBlock = document.querySelector('.phrase-block')
-        const phraseElement = document.createElement('div')
-        phraseElement.innerHTML = phrase
-        phraseElement.id = `phrase-${Math.floor(Math.random() * 1000)}`
-        phraseElement.className = 'phrase in'
-        phraseElements.push({
-          id: phraseElement.id, 
-          clearMe: () => {
-            phraseElement.classList.add('out')
-            phraseElement.classList.remove('in')
-            blob.classList.add('hide')
-          }, 
-          removeMe: setTimeout(() => {
-            phraseBlock.removeChild(phraseElement)
-            blob.classList.add('hide')
-          }, 25000)})
-        phraseBlock.append(phraseElement)
-      })
-
-      function clearScreen() {
-        phraseElements.forEach(ph => {
-          ph.clearMe()
-        })
-      }
-    </script>
+    <script src="./js/index.js"></script>
   </body>
 </html>
