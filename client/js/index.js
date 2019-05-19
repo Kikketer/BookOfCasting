@@ -38,13 +38,14 @@ socket.on('cast', function(phrase) {
   line.add(TweenLite.to(phraseElement, 8, {rotation: -rot, ease: 'Power2.easeIn', opacity: 0.9}))
   line.add(TweenLite.to(phraseElement, 2, {opacity: 0}))
 
-  phraseElements.push(line)
+  phraseElements.push({phraseElement, line})
   phraseBlock.append(phraseElement)
 })
 
 function clearScreen() {
-  phraseElements.forEach(ph => {
-    TweenLite.to(ph, 1, {opacity: 0})
+  phraseElements.forEach(({phraseElement, line}) => {
+    TweenLite.to(phraseElement, 1, {opacity: 0})
+    line.kill()
   })
 }
 
