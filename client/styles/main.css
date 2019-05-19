@@ -30,14 +30,12 @@ body {
 }
 
 .phrase {
+  display: inline-block;
   position: absolute;
   width: 60%;
   font-family: magic, serif;
-  font-size: 2.5em;
-  opacity: 0;
-  animation-fill-mode: both;
-  transition-property: top left;
-  transition-timing-function: linear;
+  font-size: 4em;
+  /*opacity: 0;*/
   text-align: center;
   line-height: .9;
 }
@@ -47,37 +45,4 @@ body {
   width: 100%;
   position: relative;
   overflow: hidden;
-}
-
-.in {
-  animation: reveal 25s;
-}
-
-.out {
-  transition-property: opacity;
-  transition-duration: 500ms;
-  opacity: 0;
-}
-
-@keyframes reveal {
-  0% {
-    opacity: 0;
-    top: 15%;
-    left: 15%;
-    transform: rotate(0deg) scale(1);
-  }
-  10% {
-    opacity: 1;
-  }
-  60% {
-    opacity: 1;
-  }
-  70% {
-    opacity: 0;
-  }
-  100% {
-    top: 25%;
-    left: 25%;
-    transform: rotate(10deg) scale(1.3);
-  }
 }
