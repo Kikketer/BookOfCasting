@@ -1,10 +1,13 @@
 module.exports = [
+    'Joey',
     'Eli',
     'Ginny',
-    'Connor',
-    'Cole',
-    'Isreal',
-    'Charlotte',
-    'Graeme',
-    'Piper'
+    'Ben',
+    'Silas',
+    'Ella',
+    'Aaven',
+    'Olivia',
+    'Carter',
+    'Skyler',
+    'Thea'
 ]
