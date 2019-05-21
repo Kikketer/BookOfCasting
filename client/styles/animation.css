@@ -33,7 +33,7 @@
     border: none;
     color: #fff;
 
-    cursor: pointer;
+    cursor: none;
     -webkit-animation: ani2 1.3s steps(70) forwards;
     animation: ani2 1.3s steps(70) forwards;
 }
