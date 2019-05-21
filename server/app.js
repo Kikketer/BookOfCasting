@@ -28,7 +28,9 @@ app.post('/cast', function(req, res) {
     type = 'unexpected'
   }
 
-  phrase = phrases[type][Math.floor(Math.random() * phrases[type].length)]
+  const combinedPhrases = [...phrases[type], ...phrases['generic']]
+
+  phrase = combinedPhrases[Math.floor(Math.random() * combinedPhrases.length)]
   phrase = phrase.replace(/\$\{name\}/gi, name)
   // {spell: req.query.spell, name: req.query.name}
   io.emit('cast', phrase)
