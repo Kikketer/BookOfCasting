@@ -52,7 +52,7 @@ module.exports = {
     'My spells have been blocked ${name}'
   ],
   nox: [
-    'A light has gone out ${name}'
+    'A light has gone out ${name}',
     'That\'ll make your room dark ${name}',
     'Good use of darkening the room ${name}',
     'Beware of the darkness ${name}',
