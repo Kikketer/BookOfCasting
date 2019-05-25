@@ -5,8 +5,13 @@ var io = require('socket.io')(http);
 var path = require('path')
 var names = require('./names')
 var phrases = require('./phrases')
+var _ = require('lodash')
 
 let currentEggIndex = 0
+const specificSpellTypes = ['egg', 'fail', 'unexpected', 'generic', 'wandyes', 'wandno']
+let castPerWizard = {}
+names.forEach(name => castPerWizard[name] = {})
+const finalPhrase = 'You have mastered this spell ${name}'
 
 app.use(express.static(path.resolve('client')))
 
@@ -28,11 +33,26 @@ app.post('/cast', function(req, res) {
     type = 'unexpected'
   }
 
-  const combinedPhrases = [...phrases[type], ...phrases['generic']]
+  if(!castPerWizard[name][type]) {
+    castPerWizard[name][type] = []
+  }
 
-  phrase = combinedPhrases[Math.floor(Math.random() * combinedPhrases.length)]
+  // Don't do special logic for the specific spell types
+  if(specificSpellTypes.includes(type)) {
+    phrase = phrases[type][Math.floor(Math.random() * phrases[type].length)]
+  } else {
+    const availablePhrases = _.difference(phrases[type], castPerWizard[name][type])
+
+    if (availablePhrases.length) {
+      phrase = availablePhrases[Math.floor(Math.random() * availablePhrases.length)]
+      castPerWizard[name][type].push(phrase)
+    } else {
+      phrase = finalPhrase
+    }
+  }
+
   phrase = phrase.replace(/\$\{name\}/gi, name)
-  // {spell: req.query.spell, name: req.query.name}
+
   io.emit('cast', phrase)
   res.send(`Cast ${phrase}`)
 })

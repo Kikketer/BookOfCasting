@@ -33,7 +33,8 @@
       }
 
       button.tocast {
-        background: lightgreen;
+        background: rebeccapurple;
+        color: white;
       }
 
       textarea {
@@ -56,7 +57,7 @@
       const socket = io()
       let eggIndex = 0
       let currentName = ''
-      const spellsToCast = ['alohomora', 'wingardium', 'nox', 'lumos', 'stupify', 'expelliarmus']
+      const spellsToCast = ['wandyes', 'wandno']
 
       socket.on('cast', function(type) {
         const out = document.querySelector('#output')
@@ -66,13 +67,15 @@
       function onConfig({names, phrases}) {
         const buttonBlock = document.querySelector('#button-block')
         // Build the buttons
-        phrases.forEach(type => {
+        phrases.forEach((type, typeIndex) => {
             const btn = document.createElement('button')
             btn.setAttribute('data-type', type)
             btn.addEventListener('click', castSpell)
             btn.innerHTML = type
             if(spellsToCast.includes(type)) {
               btn.classList.add('tocast')
+            } else {
+              btn.style.background = `rgb(${100 + (typeIndex * 5)}, ${170 + (typeIndex * 10)}, 153)`
             }
             buttonBlock.append(btn)
         })

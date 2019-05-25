@@ -159,6 +159,18 @@ module.exports = {
     'I have no wand to disarm, ${name}',
     'I felt something fall ${name}'
   ],
+  wandyes: [
+    'This wand suits you ${name}',
+    'The wand has picked the wizard',
+    'This wand calls for you ${name}',
+    'With this wand you will be great'
+  ],
+  wandno: [
+    'This wand does not suit you',
+    'This wand is dangerous in your hands',
+    'Return that wand immediately ${name}',
+    'Drop the wand ${name}'
+  ],
   egg: [
     'I sense danger in your future...',
     'Beware the woods...',
